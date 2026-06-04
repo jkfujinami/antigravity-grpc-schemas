@@ -6,8 +6,7 @@
 
 A comprehensive collection of gRPC and Protocol Buffer definitions for the Antigravity ecosystem. These schemas enable the development of third-party clients, SDKs, and custom integrations with Antigravity services.
 
-> [!IMPORTANT]
-> **These schemas have been fully updated to support Antigravity v2.0.**
+**These schemas have been updated to Antigravity v2.0.**
 
 ## 📦 Services Included
 
@@ -32,9 +31,6 @@ protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
   --proto_path=./protos \
   ./protos/exa/chat_pb/chat.proto
 ```
-
-> [!TIP]
-> This repository now includes a `buf.yaml` configured to resolve standard Google Protobuf dependencies (via `buf.build/googleapis/googleapis`). You no longer need to manage local `google/api` or `google/rpc` files manually!
 
 ## ⚠️ Disclaimer
 
