@@ -2,8 +2,12 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Protocol Buffers](https://img.shields.io/badge/Protocol%20Buffers-v3-blue)
+![Version](https://img.shields.io/badge/Antigravity-v2.0-brightgreen)
 
 A comprehensive collection of gRPC and Protocol Buffer definitions for the Antigravity ecosystem. These schemas enable the development of third-party clients, SDKs, and custom integrations with Antigravity services.
+
+> [!IMPORTANT]
+> **These schemas have been fully updated to support Antigravity v2.0.**
 
 ## 📦 Services Included
 
@@ -30,7 +34,7 @@ protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
 ```
 
 > [!TIP]
-> Standard Google Protobuf dependencies (like `google/api`, `google/rpc`) are included in the `protos/google` directory for easier integration.
+> This repository now includes a `buf.yaml` configured to resolve standard Google Protobuf dependencies (via `buf.build/googleapis/googleapis`). You no longer need to manage local `google/api` or `google/rpc` files manually!
 
 ## ⚠️ Disclaimer
 
