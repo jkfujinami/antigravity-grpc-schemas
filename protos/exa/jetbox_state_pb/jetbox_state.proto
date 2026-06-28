@@ -27,6 +27,13 @@ enum ThemeMode {
   THEME_MODE_INHERIT = 3;
 }
 
+enum ConversationWidth {
+  CONVERSATION_WIDTH_UNSPECIFIED = 0;
+  CONVERSATION_WIDTH_DEFAULT = 1;
+  CONVERSATION_WIDTH_NARROW = 2;
+  CONVERSATION_WIDTH_WIDE = 3;
+}
+
 enum AgentOnboardingState {
   AGENT_ONBOARDING_STATE_UNSPECIFIED = 0;
   AGENT_ONBOARDING_STATE_INCOMPLETE = 1;
@@ -37,6 +44,13 @@ enum MigrationStatus {
   MIGRATION_STATUS_UNSPECIFIED = 0;
   MIGRATION_STATUS_STARTED = 1;
   MIGRATION_STATUS_COMPLETED = 2;
+}
+
+enum RetroactiveMigrationStatus {
+  RETROACTIVE_MIGRATION_STATUS_UNSPECIFIED = 0;
+  RETROACTIVE_MIGRATION_STATUS_STARTED = 1;
+  RETROACTIVE_MIGRATION_STATUS_COMPLETED_RAN = 2;
+  RETROACTIVE_MIGRATION_STATUS_COMPLETED_UNNECESSARY = 3;
 }
 
 message PostOnboardingState {
@@ -70,6 +84,9 @@ message UserSettings {
   bool disable_eager_cloning = 26;
   string gcp_region = 27;
   bool remote_control_enabled = 28;
+  bool use_ai_credits = 29;
+  string active_profile = 30;
+  jetbox_state_pb.ConversationWidth conversation_width = 31;
 }
 
 message SidebarWorkspaceInfo {
@@ -119,6 +136,9 @@ message JetboxAppState {
   bool user_config_migrated = 14;
   jetbox_state_pb.MigrationStatus migrate_convos_into_projects = 16;
   string installation_uuid = 17;
+  jetbox_state_pb.MigrationStatus migrate_internal_projects = 18;
+  jetbox_state_pb.RetroactiveMigrationStatus migrate_retroactive_projects = 19;
+  int64 opted_out_best_of_n_auto_trigger_at = 20;
 }
 
 message State {

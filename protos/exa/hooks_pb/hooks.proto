@@ -8,11 +8,23 @@ message HookToolCall {
   google.protobuf.Struct args = 2;
 }
 
+message HookSystemMessage {
+  message MetadataEntry {
+    string key = 1;
+    string value = 2;
+  }
+
+  string system_message = 1;
+  repeated exa.hooks_pb.HookSystemMessage.MetadataEntry metadata = 2;
+}
+
 message HookInjectedStep {
+  string model_api_content_id = 5;
   oneof step {
     exa.hooks_pb.HookToolCall tool_call = 1;
     string user_message = 2;
     string ephemeral_message = 3;
+    exa.hooks_pb.HookSystemMessage system_message = 4;
   }
 }
 
@@ -21,6 +33,7 @@ message HookArgsCommon {
   repeated string workspace_paths = 2;
   string transcript_path = 3;
   string artifact_directory_path = 4;
+  string execution_id = 5;
 }
 
 message HookArgs {

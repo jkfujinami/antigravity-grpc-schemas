@@ -34,6 +34,7 @@ message CascadeState {
   bool fully_idle = 14;
   exa.jetski_cortex_pb.CreditUsageSummary credit_usage_summary = 12;
   repeated exa.cortex_pb.AgentMessage pending_agent_messages = 15;
+  repeated exa.cortex_pb.AccumulatedSection accumulated_sections = 16;
 }
 
 message AgentStateUpdate {
@@ -67,6 +68,12 @@ message AgentStateUpdate {
   bool fully_idle = 18;
   exa.jetski_cortex_pb.CompactionInfo compaction_info = 19;
   exa.jetski_cortex_pb.PendingAgentMessagesUpdate pending_agent_messages_update = 20;
+  repeated string bookmarks = 21;
+  exa.jetski_cortex_pb.AccumulatedSectionsUpdate accumulated_sections_update = 22;
+}
+
+message AccumulatedSectionsUpdate {
+  repeated exa.cortex_pb.AccumulatedSection accumulated_sections = 1;
 }
 
 message CompactionInfo {
@@ -138,6 +145,7 @@ message TrajectoryUpdate {
   bool fully_idle = 10;
   bool killed = 11;
   repeated exa.cortex_pb.CortexTrajectoryReference parent_references = 12;
+  exa.jetski_cortex_pb.BattleModeInfosUpdate battle_mode_infos_update = 13;
 }
 
 message StepsUpdate {
@@ -159,6 +167,12 @@ message ExecutorMetadatasUpdate {
   repeated exa.cortex_pb.ExecutorMetadata executor_metadatas = 2;
   uint32 total_length = 3;
   exa.jetski_cortex_pb.Slice page_bounds = 4;
+}
+
+message BattleModeInfosUpdate {
+  repeated uint32 indices = 1;
+  repeated exa.cortex_pb.BattleModeInfo battle_mode_infos = 2;
+  uint32 total_length = 3;
 }
 
 message QueuedStepsUpdate {
@@ -246,6 +260,7 @@ message ConversationAnnotations {
   string group_description = 11;
   bool pinned = 12;
   repeated int64 cls = 13;
+  string active_profile = 14;
 }
 
 message CascadeTrajectorySummary {
@@ -268,6 +283,7 @@ message CascadeTrajectorySummary {
   exa.cortex_pb.CortexTrajectorySource source = 20;
   bool not_fully_idle = 21;
   exa.cortex_pb.CortexTrajectoryType trajectory_type = 22;
+  bool killed = 23;
 }
 
 message CascadeTrajectorySummaries {

@@ -124,6 +124,7 @@ message Step {
     exa.cortex_pb.CortexStepInvokeSubagent invoke_subagent = 143;
     exa.cortex_pb.CortexStepRPCAction rpc_action = 152;
     exa.cortex_pb.CortexStepAskQuestion ask_question = 154;
+    exa.cortex_pb.CortexStepDirectoryRules directory_rules = 156;
     exa.cortex_pb.CortexStepExecuteNotebook execute_notebook = 150;
     exa.cortex_pb.CortexStepReadNotebook read_notebook = 144;
     exa.cortex_pb.CortexStepEditNotebook edit_notebook = 141;

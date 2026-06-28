@@ -3,6 +3,7 @@ package google.internal.cloud.code.v1internal;
 
 import "exa/api_server_pb/api_server.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 enum CascadeNuxLocation {
   CASCADE_NUX_LOCATION_UNSPECIFIED = 0;
@@ -255,6 +256,7 @@ message NuxFilter {
   repeated google.internal.cloud.code.v1internal.NuxClient clients = 1;
   google.internal.cloud.code.v1internal.NuxVersionFilter version_filter = 2;
   repeated string subclients = 3;
+  repeated string user_tiers = 4;
 }
 
 message Interaction {
@@ -323,11 +325,23 @@ message FetchFromTrawlerCacheResponse {
 
 message BattleModeOverridesRequest {
   repeated string model_ids = 1;
+  bool auto_triggered = 2;
+  string trigger_tag = 3;
 }
 
 message BattleModeOverridesResponse {
   bool should_override = 1;
   repeated string override_model_ids = 2;
+}
+
+message BattleModeAutoTriggerRequest {
+  google.protobuf.Timestamp last_auto_trigger_request_time = 1;
+  string model_id = 2;
+}
+
+message BattleModeAutoTriggerResponse {
+  int32 target_battle_n = 1;
+  string trigger_tag = 2;
 }
 
 service JetskiService {
@@ -346,4 +360,5 @@ service JetskiService {
   rpc FetchFromTrawlerCache(google.internal.cloud.code.v1internal.FetchFromTrawlerCacheRequest) returns (google.internal.cloud.code.v1internal.FetchFromTrawlerCacheResponse);
   rpc RegisterInteraction(google.internal.cloud.code.v1internal.RegisterInteractionRequest) returns (google.internal.cloud.code.v1internal.RegisterInteractionResponse);
   rpc BattleModeOverrides(google.internal.cloud.code.v1internal.BattleModeOverridesRequest) returns (google.internal.cloud.code.v1internal.BattleModeOverridesResponse);
+  rpc BattleModeAutoTrigger(google.internal.cloud.code.v1internal.BattleModeAutoTriggerRequest) returns (google.internal.cloud.code.v1internal.BattleModeAutoTriggerResponse);
 }

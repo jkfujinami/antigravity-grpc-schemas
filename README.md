@@ -2,11 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Protocol Buffers](https://img.shields.io/badge/Protocol%20Buffers-v3-blue)
-![Version](https://img.shields.io/badge/Antigravity-v2.0-brightgreen)
+![Version](https://img.shields.io/badge/Antigravity-v2.1.1-brightgreen)
 
 A comprehensive collection of gRPC and Protocol Buffer definitions for the Antigravity ecosystem. These schemas enable the development of third-party clients, SDKs, and custom integrations with Antigravity services.
 
-**These schemas have been updated to Antigravity v2.0.**
+**These schemas have been updated to Antigravity v2.1.1** (language server build `930583198`, 2026-06-12).
 
 ## 📦 Services Included
 
@@ -17,6 +17,30 @@ This repository contains Protobuf definitions for various core services:
 *   **Context & Indexing**: Codebase indexing, semantic search, and repository metadata.
 *   **Browser & Tool Use**: Definitions for web browsing capabilities and agentic tool invocation.
 *   **Unified State Sync**: Real-time state synchronization between clients and services.
+*   **Version Control (VCS)**: Git/Fig source-control state, diffs, commits, and staging *(new in v2.1)*.
+*   **Integrated Terminal**: Create, stream, and control terminal sessions *(new in v2.1)*.
+
+## 🆕 What's New in v2.1.1
+
+Updated from v2.0 by re-extracting the embedded `FileDescriptorProto` descriptors from the Antigravity extension bundle (v2.1.1, language server build `930583198` / 2026-06-12).
+
+**Overall delta:** Messages +105 / ~80 changed / -1 removed · Enums +13 / ~8 changed · Services ~2 changed (additive — no RPCs removed).
+
+**New `.proto` files**
+
+*   `exa/vcs_pb/vcs.proto` — version-control (Git/Fig) state.
+*   `exa/google/internal/cloud/code/v1internal/prediction_service.proto` — prediction service.
+
+**New RPCs on `LanguageServerService`**
+
+*   **Version control / Git:** `GetVersionControlState`, `WatchVersionControlState`, `GetVersionControlFileContent`, `GetCommitDetails`, `FigSync`, `FigCommit`, `FigAmend`, `FigUpload`, `GitStage`, `GitUnstage`, `GitCommit`, `GitDiscard`.
+*   **Integrated terminal:** `CreateTerminal`, `StreamTerminalOutput`, `SendTerminalInput`, `CloseTerminal`, `ListTerminals`.
+*   **Misc:** `ListProfiles`, `RetrieveUserQuotaSummary`, `SetupJetskiChat`, `DetectBattleModeAutoTrigger`, `EliminateBattleModeArm`, `IsProjectsEnabledInternally`.
+
+**Other**
+
+*   `JetskiService`: new `BattleModeAutoTrigger` RPC.
+*   Removed: `exa.cortex_pb.ModelAliasResolutionPayload` (the only removal — no other breaking changes).
 
 ## 🚀 Getting Started
 

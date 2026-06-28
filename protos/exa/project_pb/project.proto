@@ -20,6 +20,14 @@ message Resource {
 }
 
 message Google3 {
+  enum ForkType {
+    FORK_TYPE_UNSPECIFIED = 0;
+    FORK_TYPE_PIPER = 1;
+    FORK_TYPE_JJ = 2;
+    FORK_TYPE_FIG = 3;
+  }
+
+  exa.project_pb.Google3.ForkType fork_type = 1;
 }
 
 message GitFolder {

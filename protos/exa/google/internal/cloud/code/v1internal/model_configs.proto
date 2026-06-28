@@ -59,6 +59,8 @@ message ModelDetails {
   google.internal.cloud.code.v1internal.ModelExperiments model_experiments = 37;
   bool supports_thought_circulation = 38;
   string vertex_model_id = 39;
+  bool supports_deferred_tool_loading = 40;
+  string model_url = 41;
 }
 
 message ModelSort {

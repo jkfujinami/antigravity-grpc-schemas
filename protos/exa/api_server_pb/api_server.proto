@@ -126,6 +126,7 @@ message GetImageGenerationRequest {
   repeated exa.codeium_common_pb.Media input_media = 6;
   string trajectory_id = 7;
   int32 step_index = 8;
+  string aspect_ratio = 9;
 }
 
 message GetImageGenerationResponse {

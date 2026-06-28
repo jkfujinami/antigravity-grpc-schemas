@@ -55,6 +55,7 @@ message IneligibleTier {
     RESTRICTED_DASHER_USER = 9;
     VALIDATION_REQUIRED = 10;
     GOOGLE_TOS_NOT_SUPPORTED_BY_CLIENT = 11;
+    UNSUPPORTED_CLIENT = 12;
   }
 
   google.internal.cloud.code.v1internal.IneligibleTier.IneligibleTierReasonCodes reason_code = 1;

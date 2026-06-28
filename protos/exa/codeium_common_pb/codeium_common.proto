@@ -2412,6 +2412,16 @@ message Metadata {
   repeated string user_tags = 18;
   string region_code = 30;
   string product_name = 31;
+  string environment_type = 32;
+  exa.codeium_common_pb.RuntimeEnvironment runtime_environment = 33;
+}
+
+message RuntimeEnvironment {
+  string host = 1;
+  string binary = 2;
+  string viewport_width_cohort = 3;
+  string user_cohort = 4;
+  string os = 5;
 }
 
 message EditorOptions {
@@ -3032,6 +3042,7 @@ message ModelFeatures {
   bool requires_lead_in_generation = 25;
   bool requires_no_xml_tool_examples = 26;
   bool supports_thought_circulation = 30;
+  bool supports_deferred_tool_loading = 31;
 }
 
 message ExternalModel {
@@ -3073,6 +3084,8 @@ message ModelInfo {
   string tool_response_key = 21;
   uint32 tokens_per_image = 22;
   string vertex_model_id = 23;
+  exa.codeium_common_pb.ModelProvider model_provider = 24;
+  string model_url = 25;
 }
 
 message ApiProviderRoutingConfig {
@@ -3166,6 +3179,13 @@ message TextBlock {
     exa.codeium_common_pb.FileLineRange file_line_range = 2;
     string label = 3;
   }
+}
+
+message DynamicContextScopeItem {
+  string provider_label = 1;
+  string item_value = 2;
+  string item_label = 3;
+  string uri = 4;
 }
 
 message RepositoryScopeItem {
@@ -3360,6 +3380,7 @@ message SlashCommandInfo {
   string name = 1;
   string model_facing_text = 2;
   exa.codeium_common_pb.SlashCommandType type = 3;
+  string icon = 4;
 }
 
 message SlashCommandScopeItem {
@@ -3400,6 +3421,7 @@ message ContextScopeItem {
     exa.codeium_common_pb.TerminalScopeItem terminal = 25;
     exa.codeium_common_pb.McpPromptScopeItem mcp_prompt = 26;
     exa.codeium_common_pb.SlashCommandScopeItem slash_command = 27;
+    exa.codeium_common_pb.DynamicContextScopeItem dynamic_context = 28;
   }
 }
 
@@ -4156,6 +4178,7 @@ message ArtifactMetadata {
   google.protobuf.Timestamp updated_at = 4;
   int64 version = 5;
   bool request_feedback = 6;
+  bool user_facing = 7;
 }
 
 message DiffCommentInfo {
