@@ -314,6 +314,8 @@ message StreamAgentStateUpdatesRequest {
   exa.jetski_cortex_pb.ClientTrajectoryVerbosity trajectory_verbosity = 4;
   exa.jetski_cortex_pb.Slice initial_generator_metadatas_page_bounds = 5;
   exa.jetski_cortex_pb.Slice initial_executor_metadatas_page_bounds = 6;
+  bool disable_rehydration = 7;
+  bool enable_latency_telemetry = 8;
 }
 
 message StreamAgentStateUpdatesResponse {

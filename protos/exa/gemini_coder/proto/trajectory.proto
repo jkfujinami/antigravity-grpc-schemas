@@ -44,6 +44,7 @@ message TaskDetails {
   string progress = 3;
   string description = 4;
   bool requires_input_approval = 5;
+  bool is_daemon = 6;
 }
 
 message Step {
@@ -61,28 +62,22 @@ message Step {
   oneof step {
     exa.cortex_pb.CortexStepGeneric generic = 140;
     exa.cortex_pb.CortexStepFinish finish = 12;
-    exa.cortex_pb.CortexStepMquery mquery = 9;
     exa.cortex_pb.CortexStepCodeAction code_action = 10;
     exa.cortex_pb.CortexStepGitCommit git_commit = 11;
     exa.cortex_pb.CortexStepGrepSearch grep_search = 13;
-    exa.cortex_pb.CortexStepCompile compile = 16;
-    exa.cortex_pb.CortexStepViewCodeItem view_code_item = 22;
     exa.cortex_pb.CortexStepErrorMessage error_message = 24;
     exa.cortex_pb.CortexStepRunCommand run_command = 28;
     exa.cortex_pb.CortexStepFind find = 34;
     exa.cortex_pb.CortexStepSuggestedResponses suggested_responses = 36;
     exa.cortex_pb.CortexStepCommandStatus command_status = 37;
     exa.cortex_pb.CortexStepReadUrlContent read_url_content = 40;
-    exa.cortex_pb.CortexStepViewContentChunk view_content_chunk = 41;
     exa.cortex_pb.CortexStepSearchWeb search_web = 42;
     exa.cortex_pb.CortexStepMcpTool mcp_tool = 47;
     exa.cortex_pb.CortexStepClipboard clipboard = 55;
-    exa.cortex_pb.CortexStepViewFileOutline view_file_outline = 58;
     exa.cortex_pb.CortexStepListResources list_resources = 62;
     exa.cortex_pb.CortexStepReadResource read_resource = 63;
     exa.cortex_pb.CortexStepLintDiff lint_diff = 64;
     exa.cortex_pb.CortexStepOpenBrowserUrl open_browser_url = 67;
-    exa.cortex_pb.CortexStepTrajectorySearch trajectory_search = 72;
     exa.cortex_pb.CortexStepExecuteBrowserJavaScript execute_browser_javascript = 73;
     exa.cortex_pb.CortexStepListBrowserPages list_browser_pages = 74;
     exa.cortex_pb.CortexStepCaptureBrowserScreenshot capture_browser_screenshot = 75;
@@ -100,8 +95,6 @@ message Step {
     exa.cortex_pb.CortexStepBrowserListNetworkRequests browser_list_network_requests = 137;
     exa.cortex_pb.CortexStepBrowserGetNetworkRequest browser_get_network_request = 138;
     exa.cortex_pb.CortexStepBrowserPressKey browser_press_key = 92;
-    exa.cortex_pb.CortexStepTaskBoundary task_boundary = 93;
-    exa.cortex_pb.CortexStepNotifyUser notify_user = 94;
     exa.cortex_pb.CortexStepCodeAcknowledgement code_acknowledgement = 95;
     exa.cortex_pb.CortexStepInternalSearch internal_search = 96;
     exa.cortex_pb.CortexStepBrowserSubagent browser_subagent = 97;
@@ -120,11 +113,11 @@ message Step {
     exa.cortex_pb.CortexStepSystemMessage system_message = 114;
     exa.cortex_pb.CortexStepWait wait = 115;
     exa.cortex_pb.CortexStepKIInsertion ki_insertion = 129;
-    exa.cortex_pb.CortexStepWorkspaceAPI workspace_api = 136;
     exa.cortex_pb.CortexStepInvokeSubagent invoke_subagent = 143;
     exa.cortex_pb.CortexStepRPCAction rpc_action = 152;
     exa.cortex_pb.CortexStepAskQuestion ask_question = 154;
     exa.cortex_pb.CortexStepDirectoryRules directory_rules = 156;
+    exa.cortex_pb.CortexStepToolSearch tool_search = 157;
     exa.cortex_pb.CortexStepExecuteNotebook execute_notebook = 150;
     exa.cortex_pb.CortexStepReadNotebook read_notebook = 144;
     exa.cortex_pb.CortexStepEditNotebook edit_notebook = 141;
@@ -158,6 +151,15 @@ message Step {
     exa.cortex_pb.CortexStepMove move = 100;
     exa.cortex_pb.CortexStepEphemeralMessage ephemeral_message = 103;
     exa.cortex_pb.CortexStepDummy dummy = 7;
+    exa.cortex_pb.CortexStepMquery mquery = 9;
+    exa.cortex_pb.CortexStepCompile compile = 16;
+    exa.cortex_pb.CortexStepViewCodeItem view_code_item = 22;
+    exa.cortex_pb.CortexStepViewContentChunk view_content_chunk = 41;
+    exa.cortex_pb.CortexStepViewFileOutline view_file_outline = 58;
+    exa.cortex_pb.CortexStepTrajectorySearch trajectory_search = 72;
+    exa.cortex_pb.CortexStepTaskBoundary task_boundary = 93;
+    exa.cortex_pb.CortexStepNotifyUser notify_user = 94;
+    exa.cortex_pb.CortexStepWorkspaceAPI workspace_api = 136;
     exa.cortex_pb.CortexStepPlanInput plan_input = 8;
     exa.cortex_pb.CortexStepFileBreakdown file_breakdown = 21;
     exa.cortex_pb.CortexStepWriteToFile write_to_file = 23;

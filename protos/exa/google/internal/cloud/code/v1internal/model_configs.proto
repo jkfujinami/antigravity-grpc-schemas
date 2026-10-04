@@ -2,11 +2,14 @@ syntax = "proto3";
 package google.internal.cloud.code.v1internal;
 
 import "exa/codeium_common_pb/codeium_common.proto";
+import "exa/google/internal/cloud/code/v1internal/entitlement.proto";
 import "google/protobuf/timestamp.proto";
 
 message FetchAvailableModelsRequest {
   string project = 1;
   string request_id = 2;
+  google.internal.cloud.code.v1internal.Entitlement entitlement = 9;
+  string location = 3;
 }
 
 message QuotaInfo {
@@ -61,6 +64,7 @@ message ModelDetails {
   string vertex_model_id = 39;
   bool supports_deferred_tool_loading = 40;
   string model_url = 41;
+  bool supports_adaptive_thinking = 42;
 }
 
 message ModelSort {

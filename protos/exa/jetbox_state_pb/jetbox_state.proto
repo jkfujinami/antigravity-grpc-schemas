@@ -2,7 +2,9 @@ syntax = "proto3";
 package jetbox_state_pb;
 
 import "exa/codeium_common_pb/codeium_common.proto";
+import "exa/cortex_pb/cortex.proto";
 import "exa/project_pb/project.proto";
+import "exa/vcs_pb/vcs.proto";
 
 enum PostOnboardingStepType {
   POST_ONBOARDING_STEP_TYPE_UNSPECIFIED = 0;
@@ -40,10 +42,18 @@ enum AgentOnboardingState {
   AGENT_ONBOARDING_STATE_COMPLETED = 2;
 }
 
+enum MigrationID {
+  MIGRATION_ID_UNSPECIFIED = 0;
+  MIGRATION_ID_SIDECAR_USER_CONFIG_BYPASS = 1;
+  MIGRATION_ID_POPULATE_PROJECT_UPDATED_AT = 2;
+  MIGRATION_ID_SANITY_CHECK_PROJECT_URIS = 3;
+}
+
 enum MigrationStatus {
   MIGRATION_STATUS_UNSPECIFIED = 0;
   MIGRATION_STATUS_STARTED = 1;
   MIGRATION_STATUS_COMPLETED = 2;
+  MIGRATION_STATUS_FAILED = 3;
 }
 
 enum RetroactiveMigrationStatus {
@@ -87,6 +97,14 @@ message UserSettings {
   bool use_ai_credits = 29;
   string active_profile = 30;
   jetbox_state_pb.ConversationWidth conversation_width = 31;
+  string remote_control_hostname = 33;
+  exa.cortex_pb.MessageDeliveryStrategy queued_message_delivery_strategy = 34;
+  jetbox_state_pb.GoogleSpecificConfig google_config = 35;
+  bool enable_business_login = 36;
+  bool enable_notifications_for_special_events = 37;
+  bool enable_personal_customizations = 38;
+  string shell_setup_script = 39;
+  bool enable_sounds_for_special_events = 40;
 }
 
 message SidebarWorkspaceInfo {
@@ -110,6 +128,10 @@ message CustomThemeSeeds {
   string primary_foreground_override = 4;
 }
 
+message GoogleSpecificConfig {
+  exa.vcs_pb.VcsType magic_workspace_vcs = 1;
+}
+
 message GoogleSpecificSettings {
   bool google3_project_created = 1;
 }
@@ -122,6 +144,11 @@ message JetboxAppState {
   message SidebarWorkspacesEntry {
     string key = 1;
     jetbox_state_pb.SidebarWorkspaceInfo value = 2;
+  }
+
+  message MigrationsEntry {
+    int32 key = 1;
+    jetbox_state_pb.MigrationStatus value = 2;
   }
 
   jetbox_state_pb.PostOnboardingState post_onboarding = 1;
@@ -139,6 +166,7 @@ message JetboxAppState {
   jetbox_state_pb.MigrationStatus migrate_internal_projects = 18;
   jetbox_state_pb.RetroactiveMigrationStatus migrate_retroactive_projects = 19;
   int64 opted_out_best_of_n_auto_trigger_at = 20;
+  repeated jetbox_state_pb.JetboxAppState.MigrationsEntry migrations = 21;
 }
 
 message State {

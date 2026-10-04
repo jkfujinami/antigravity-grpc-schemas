@@ -2,11 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Protocol Buffers](https://img.shields.io/badge/Protocol%20Buffers-v3-blue)
-![Version](https://img.shields.io/badge/Antigravity-v2.1.1-brightgreen)
+![Version](https://img.shields.io/badge/Antigravity-v2.18.1-brightgreen)
 
 A comprehensive collection of gRPC and Protocol Buffer definitions for the Antigravity ecosystem. These schemas enable the development of third-party clients, SDKs, and custom integrations with Antigravity services.
 
-**These schemas have been updated to Antigravity v2.1.1** (language server build `930583198`, 2026-06-12).
+**These schemas have been updated to Antigravity v2.18.1 / IDE 2.5.5+** (extracted from the comprehensive IDE bundle).
 
 ## 📦 Services Included
 
@@ -17,30 +17,36 @@ This repository contains Protobuf definitions for various core services:
 *   **Context & Indexing**: Codebase indexing, semantic search, and repository metadata.
 *   **Browser & Tool Use**: Definitions for web browsing capabilities and agentic tool invocation.
 *   **Unified State Sync**: Real-time state synchronization between clients and services.
-*   **Version Control (VCS)**: Git/Fig source-control state, diffs, commits, and staging *(new in v2.1)*.
-*   **Integrated Terminal**: Create, stream, and control terminal sessions *(new in v2.1)*.
+*   **Version Control (VCS)**: Git/Fig source-control state, diffs, commits, and staging.
+*   **Integrated Terminal**: Create, stream, and control terminal sessions.
+*   **Agent Manager & UI Toolkit**: Agent workspace management and iframe-based UI messaging *(new in v2.18.1)*.
+*   **Sidecar Service**: Inter-process and multi-IDE sidecar integration *(new in v2.18.1)*.
 
-## 🆕 What's New in v2.1.1
+## 🆕 What's New in v2.18.1
 
-Updated from v2.0 by re-extracting the embedded `FileDescriptorProto` descriptors from the Antigravity extension bundle (v2.1.1, language server build `930583198` / 2026-06-12).
+Updated by re-extracting embedded `FileDescriptorProto` descriptors from the full Antigravity IDE application bundle.
 
-**Overall delta:** Messages +105 / ~80 changed / -1 removed · Enums +13 / ~8 changed · Services ~2 changed (additive — no RPCs removed).
+**Overall delta:**
+*   **Descriptors**: 50 → 54 (+4 proto files)
+*   **Messages**: +195 new messages (purely additive, no breaking removals)
+*   **Enums**: +15 new enums
+*   **Services**: +3 new services
 
 **New `.proto` files**
 
-*   `exa/vcs_pb/vcs.proto` — version-control (Git/Fig) state.
-*   `exa/google/internal/cloud/code/v1internal/prediction_service.proto` — prediction service.
+*   `exa/agent_manager_pb/agent_manager.proto` — Workspace, session, playground, and settings state models for agent orchestration.
+*   `exa/gemini_coder/proto/iframe_messages.proto` — Webview/Iframe host communication protocol with over 30 RPC methods.
+*   `intellij/proto/sidecar.proto` — Sidecar service definition for external IDEs (IntelliJ/JetBrains).
+*   `exa/google/internal/cloud/code/v1internal/metrics.proto` — Telemetry and telemetry metrics models.
+*   `exa/cortex_pb/model_native_tool_type.proto` — Model native tool definitions.
+*   `exa/google/internal/cloud/code/v1internal/entitlement.proto` — User entitlements and license tiers.
+*   `exa/learning/genai/api/interactions/proto/content.proto` — Multimodal interaction content schemas.
 
-**New RPCs on `LanguageServerService`**
+**New Services**
 
-*   **Version control / Git:** `GetVersionControlState`, `WatchVersionControlState`, `GetVersionControlFileContent`, `GetCommitDetails`, `FigSync`, `FigCommit`, `FigAmend`, `FigUpload`, `GitStage`, `GitUnstage`, `GitCommit`, `GitDiscard`.
-*   **Integrated terminal:** `CreateTerminal`, `StreamTerminalOutput`, `SendTerminalInput`, `CloseTerminal`, `ListTerminals`.
-*   **Misc:** `ListProfiles`, `RetrieveUserQuotaSummary`, `SetupJetskiChat`, `DetectBattleModeAutoTrigger`, `EliminateBattleModeArm`, `IsProjectsEnabledInternally`.
-
-**Other**
-
-*   `JetskiService`: new `BattleModeAutoTrigger` RPC.
-*   Removed: `exa.cortex_pb.ModelAliasResolutionPayload` (the only removal — no other breaking changes).
+*   `gemini_coder.agent_ui_toolkit.iframe.AntigravityApi`
+*   `gemini_coder.agent_ui_toolkit.iframe.ExtensionApi`
+*   `antigravity.sidecar.v1.SidecarService`
 
 ## 🚀 Getting Started
 

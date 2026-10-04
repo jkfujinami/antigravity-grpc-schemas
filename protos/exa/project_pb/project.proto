@@ -2,6 +2,7 @@ syntax = "proto3";
 package exa.project_pb;
 
 import "exa/codeium_common_pb/codeium_common.proto";
+import "google/protobuf/timestamp.proto";
 
 enum FolderType {
   FOLDER_TYPE_UNSPECIFIED = 0;
@@ -73,6 +74,8 @@ message ProjectSettings {
   bool sandbox_mode = 3;
   exa.codeium_common_pb.CascadeCommandsAutoExecution auto_execution_policy = 4;
   exa.codeium_common_pb.ArtifactReviewMode artifact_review_mode = 5;
+  bool enable_permissioned_github = 6;
+  string shell_setup_script = 7;
 }
 
 message Project {
@@ -83,4 +86,7 @@ message Project {
   exa.project_pb.Environments environments = 7;
   exa.project_pb.PermissionGrants permission_grants = 9;
   exa.project_pb.ProjectSettings settings = 10;
+  google.protobuf.Timestamp updated_at = 11;
+  bool is_workspace_only = 12;
+  bool archived = 13;
 }

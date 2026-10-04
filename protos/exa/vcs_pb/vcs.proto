@@ -33,6 +33,7 @@ message VcsConflictFile {
   string path = 1;
   exa.vcs_pb.VcsConflictFile.Side yours = 2;
   exa.vcs_pb.VcsConflictFile.Side theirs = 3;
+  string uri = 4;
 }
 
 message VcsConflictState {
@@ -58,7 +59,7 @@ message VcsCommit {
 
   message Message {
     string subject = 1;
-    string body = 2;
+    string description = 2;
   }
 
   message Status {
@@ -66,6 +67,8 @@ message VcsCommit {
     bool is_submitted = 2;
     bool is_draft = 3;
     bool is_secret = 4;
+    bool is_empty = 5;
+    bool has_conflict = 6;
   }
 
   message Refs {
@@ -104,4 +107,9 @@ message VcsWorkspaceState {
   repeated exa.vcs_pb.VcsFileChange branch_changes = 8;
   string merge_base_commit_id = 9;
   string target_branch = 10;
+}
+
+message JJWorktree {
+  string base_commit_description = 2;
+  string uri = 3;
 }

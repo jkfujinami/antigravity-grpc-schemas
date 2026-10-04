@@ -1248,6 +1248,7 @@ enum ModelProvider {
   MODEL_PROVIDER_GOOGLE = 4;
   MODEL_PROVIDER_XAI = 5;
   MODEL_PROVIDER_DEEPSEEK = 6;
+  MODEL_PROVIDER_GLM = 7;
 }
 
 enum ModelPricingType {
@@ -1491,6 +1492,7 @@ enum CascadeNUXLocation {
   CASCADE_NUX_LOCATION_ARTIFACT_VIEW_BOTTOM_LEFT = 11;
   CASCADE_NUX_LOCATION_CHAT_PANEL_BANNER = 12;
   CASCADE_NUX_LOCATION_ALWAYS_MOUNTED = 13;
+  CASCADE_NUX_LOCATION_UI_PLUGINS = 14;
 }
 
 enum CascadeNUXIcon {
@@ -1512,6 +1514,7 @@ enum CascadeNUXTrigger {
   CASCADE_NUX_TRIGGER_MANAGER_PROJECT_CREATED = 11;
   CASCADE_NUX_TRIGGER_MANAGER_PROJECT_ENVIRONMENT_SELECTION = 12;
   CASCADE_NUX_TRIGGER_MANAGER_CREATE_FIRST_PROJECT_DIALOG = 13;
+  CASCADE_NUX_TRIGGER_MANAGER_PLUGINS_DASHBOARD_OPENED = 14;
 }
 
 enum AnnotationsConfig {
@@ -2060,10 +2063,6 @@ enum BrowserJsAutoRunPolicy {
   BROWSER_JS_AUTO_RUN_POLICY_ENABLED = 3;
 }
 
-enum NullValue {
-  NULL_VALUE = 0;
-}
-
 message CompletionsRequest {
   exa.codeium_common_pb.CompletionConfiguration configuration = 1;
   string prompt = 2;
@@ -2096,21 +2095,21 @@ message CompletionsRequest {
 message CompletionConfiguration {
   uint64 num_completions = 1;
   uint64 max_tokens = 2;
-  uint64 max_newlines = 3;
-  double min_log_probability = 4;
   double temperature = 5;
-  double first_temperature = 6;
   uint64 top_k = 7;
   double top_p = 8;
   repeated string stop_patterns = 9;
   uint64 seed = 10;
+  bool last_message_is_partial = 15;
+  bool disable_parallel_tool_calls = 17;
+  uint64 max_newlines = 3;
+  double min_log_probability = 4;
+  double first_temperature = 6;
   double fim_eot_prob_threshold = 11;
   bool use_fim_eot_threshold = 12;
   bool do_not_score_stop_tokens = 13;
   bool sqrt_len_normalized_log_prob_score = 14;
-  bool last_message_is_partial = 15;
   bool return_logprob = 16;
-  bool disable_parallel_tool_calls = 17;
 }
 
 message PromptElementRange {
@@ -2176,6 +2175,16 @@ message ExperimentMiddleModeTokenPayload {
 
 message ExperimentMultilineModelThresholdPayload {
   float threshold = 1;
+}
+
+message ErrorSamplingConfig {
+  message ErrorMatchToSampleRateEntry {
+    string key = 1;
+    double value = 2;
+  }
+
+  double sample_rate = 1;
+  repeated exa.codeium_common_pb.ErrorSamplingConfig.ErrorMatchToSampleRateEntry error_match_to_sample_rate = 2;
 }
 
 message ExperimentSentryPayload {
@@ -2414,6 +2423,7 @@ message Metadata {
   string product_name = 31;
   string environment_type = 32;
   exa.codeium_common_pb.RuntimeEnvironment runtime_environment = 33;
+  exa.codeium_common_pb.ExperimentConfig experiment_config = 35;
 }
 
 message RuntimeEnvironment {
@@ -2422,6 +2432,8 @@ message RuntimeEnvironment {
   string viewport_width_cohort = 3;
   string user_cohort = 4;
   string os = 5;
+  string environment_type = 6;
+  string identity_type = 7;
 }
 
 message EditorOptions {
@@ -2607,6 +2619,8 @@ message ClientModelConfig {
   string tag_description = 17;
   repeated exa.codeium_common_pb.ClientModelConfig.SupportedMimeTypesEntry supported_mime_types = 18;
   bool supports_thought_circulation = 19;
+  string model_url = 20;
+  string model_id = 21;
 }
 
 message DefaultOverrideModelConfig {
@@ -4076,6 +4090,7 @@ message MetricsRecord {
   string name = 1;
   exa.codeium_common_pb.MetricsMetadata metadata = 9;
   float value = 2;
+  string value_breakdown = 10;
   repeated exa.codeium_common_pb.MetricsRecord.DetailsEntry details = 3;
   string error = 6;
   string trajectory_id = 7;
@@ -4316,29 +4331,4 @@ message PermissionGrantsConfig {
   repeated string allow = 1;
   repeated string deny = 2;
   repeated string ask = 3;
-}
-
-message Struct {
-  repeated exa.codeium_common_pb.Field fields = 1;
-}
-
-message Field {
-  string name = 1;
-  exa.codeium_common_pb.Value value = 2;
-}
-
-message Value {
-  oneof kind {
-    exa.codeium_common_pb.NullValue null_value = 1;
-    double number_value = 2;
-    string string_value = 3;
-    bool bool_value = 4;
-    exa.codeium_common_pb.Struct struct_value = 5;
-    exa.codeium_common_pb.ListValue list_value = 6;
-    exa.codeium_common_pb.Media media = 7;
-  }
-}
-
-message ListValue {
-  repeated exa.codeium_common_pb.Value values = 1;
 }

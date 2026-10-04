@@ -18,6 +18,7 @@ enum CascadeNuxLocation {
   CASCADE_NUX_LOCATION_ARTIFACT_VIEW_BOTTOM_LEFT = 11;
   CASCADE_NUX_LOCATION_CHAT_PANEL_BANNER = 12;
   CASCADE_NUX_LOCATION_ALWAYS_MOUNTED = 13;
+  CASCADE_NUX_LOCATION_UI_PLUGINS = 14;
 }
 
 enum CascadeNuxIcon {
@@ -39,6 +40,7 @@ enum CascadeNuxTrigger {
   CASCADE_NUX_TRIGGER_MANAGER_PROJECT_CREATED = 11;
   CASCADE_NUX_TRIGGER_MANAGER_PROJECT_ENVIRONMENT_SELECTION = 12;
   CASCADE_NUX_TRIGGER_MANAGER_CREATE_FIRST_PROJECT_DIALOG = 13;
+  CASCADE_NUX_TRIGGER_MANAGER_PLUGINS_DASHBOARD_OPENED = 14;
 }
 
 enum NuxClient {
@@ -51,6 +53,22 @@ enum NUXInteractionType {
   NUX_INTERACTION_TYPE_UNSPECIFIED = 0;
   NUX_INTERACTION_TYPE_DISMISSED = 1;
   NUX_INTERACTION_TYPE_ACCEPTED = 2;
+}
+
+message ProvisionConversationBundleDirRequest {
+}
+
+message ProvisionConversationBundleDirResponse {
+  string bundle_dir = 1;
+}
+
+message GetBundleWriteMintRequest {
+}
+
+message GetBundleWriteMintResponse {
+  string bundle_dir = 1;
+  bytes bundle_write_mint = 2;
+  google.protobuf.Timestamp mint_expiry_time = 3;
 }
 
 message SetUserSettingsRequest {
@@ -167,6 +185,10 @@ message GStaticSource {
   string link = 1;
 }
 
+message Google3Source {
+  string depot_path = 1;
+}
+
 message BuildWithGooglePlugin {
   message VersionShasEntry {
     string key = 1;
@@ -177,6 +199,7 @@ message BuildWithGooglePlugin {
   repeated google.internal.cloud.code.v1internal.BuildWithGooglePlugin.VersionShasEntry version_shas = 4;
   oneof source {
     google.internal.cloud.code.v1internal.GStaticSource gstatic = 3;
+    google.internal.cloud.code.v1internal.Google3Source google3 = 5;
   }
 }
 
@@ -295,6 +318,15 @@ message CheckUrlDenylistResponse {
   bool is_denied = 1;
 }
 
+message CheckUrlAntivirusRequest {
+  string url = 1;
+}
+
+message CheckUrlAntivirusResponse {
+  bool is_clean = 1;
+  string reason = 2;
+}
+
 message GetHealthRequest {
   string name = 1;
 }
@@ -312,6 +344,13 @@ message RecordTrajectoryAnalyticsRequest {
 }
 
 message RecordTrajectoryAnalyticsResponse {
+}
+
+message WriteTrajectoryACLsRequest {
+  string trajectory_id = 1;
+}
+
+message WriteTrajectoryACLsResponse {
 }
 
 message FetchFromTrawlerCacheRequest {
@@ -337,11 +376,31 @@ message BattleModeOverridesResponse {
 message BattleModeAutoTriggerRequest {
   google.protobuf.Timestamp last_auto_trigger_request_time = 1;
   string model_id = 2;
+  string prompt = 3;
 }
 
 message BattleModeAutoTriggerResponse {
   int32 target_battle_n = 1;
   string trigger_tag = 2;
+  string banner_text = 3;
+}
+
+message UploadPerformanceProfileRequest {
+  google.internal.cloud.code.v1internal.PerformanceProfile performance_profile = 1;
+}
+
+message UploadPerformanceProfileResponse {
+}
+
+message PerformanceProfile {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    CPU = 1;
+    HEAP = 2;
+  }
+
+  bytes profile_bytes = 1;
+  google.internal.cloud.code.v1internal.PerformanceProfile.Type profile_type = 2;
 }
 
 service JetskiService {
@@ -355,10 +414,15 @@ service JetskiService {
   rpc SetUserSettings(google.internal.cloud.code.v1internal.SetUserSettingsRequest) returns (google.internal.cloud.code.v1internal.SetUserSettingsResponse);
   rpc TabChat(google.internal.cloud.code.v1internal.TabChatRequest) returns (stream google.internal.cloud.code.v1internal.TabChatResponse);
   rpc CheckUrlDenylist(google.internal.cloud.code.v1internal.CheckUrlDenylistRequest) returns (google.internal.cloud.code.v1internal.CheckUrlDenylistResponse);
+  rpc CheckUrlAntivirus(google.internal.cloud.code.v1internal.CheckUrlAntivirusRequest) returns (google.internal.cloud.code.v1internal.CheckUrlAntivirusResponse);
   rpc GetHealth(google.internal.cloud.code.v1internal.GetHealthRequest) returns (google.internal.cloud.code.v1internal.Health);
   rpc RecordTrajectoryAnalytics(google.internal.cloud.code.v1internal.RecordTrajectoryAnalyticsRequest) returns (google.internal.cloud.code.v1internal.RecordTrajectoryAnalyticsResponse);
+  rpc WriteTrajectoryACLs(google.internal.cloud.code.v1internal.WriteTrajectoryACLsRequest) returns (google.internal.cloud.code.v1internal.WriteTrajectoryACLsResponse);
   rpc FetchFromTrawlerCache(google.internal.cloud.code.v1internal.FetchFromTrawlerCacheRequest) returns (google.internal.cloud.code.v1internal.FetchFromTrawlerCacheResponse);
   rpc RegisterInteraction(google.internal.cloud.code.v1internal.RegisterInteractionRequest) returns (google.internal.cloud.code.v1internal.RegisterInteractionResponse);
   rpc BattleModeOverrides(google.internal.cloud.code.v1internal.BattleModeOverridesRequest) returns (google.internal.cloud.code.v1internal.BattleModeOverridesResponse);
   rpc BattleModeAutoTrigger(google.internal.cloud.code.v1internal.BattleModeAutoTriggerRequest) returns (google.internal.cloud.code.v1internal.BattleModeAutoTriggerResponse);
+  rpc UploadPerformanceProfile(google.internal.cloud.code.v1internal.UploadPerformanceProfileRequest) returns (google.internal.cloud.code.v1internal.UploadPerformanceProfileResponse);
+  rpc ProvisionConversationBundleDir(google.internal.cloud.code.v1internal.ProvisionConversationBundleDirRequest) returns (google.internal.cloud.code.v1internal.ProvisionConversationBundleDirResponse);
+  rpc GetBundleWriteMint(google.internal.cloud.code.v1internal.GetBundleWriteMintRequest) returns (google.internal.cloud.code.v1internal.GetBundleWriteMintResponse);
 }

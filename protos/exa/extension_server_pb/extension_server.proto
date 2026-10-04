@@ -2,6 +2,7 @@ syntax = "proto3";
 package exa.extension_server_pb;
 
 import "exa/codeium_common_pb/codeium_common.proto";
+import "exa/cortex_pb/cortex.proto";
 import "exa/gemini_coder/proto/trajectory.proto";
 import "exa/jetski_cortex_pb/jetski_cortex.proto";
 import "exa/language_server_pb/language_server.proto";
@@ -329,6 +330,7 @@ message ReadNotebookRequest {
 message ReadNotebookResponse {
   string flattened_content = 1;
   int32 read_cell_count = 2;
+  repeated exa.cortex_pb.NotebookBlob blobs = 3;
 }
 
 message ExecuteNotebookRequest {
@@ -361,6 +363,7 @@ message ExecuteNotebookResponse {
     bool output_text_truncated = 5;
     bool generated_images = 6;
     string error_trace = 7;
+    repeated exa.cortex_pb.NotebookBlob blobs = 8;
   }
 
   exa.extension_server_pb.ExecuteNotebookResponse.ExecutionStatus status = 1;
